@@ -1,5 +1,6 @@
 import calendar
 import html
+from pathlib import Path
 from datetime import date, datetime, time, timedelta
 
 import pandas as pd
@@ -17,6 +18,8 @@ html,body,[class*="css"], [data-testid="stApp"] {font-family:'Inter',sans-serif}
 .stApp {background:#f5f8f5;color:#173a2a}
 [data-testid="stSidebar"] {background:linear-gradient(175deg,#006c43,#008a4b 70%,#005e40);}
 [data-testid="stSidebar"] * {color:white !important}
+[data-testid="stSidebar"] [data-testid="stImage"] {background:#ffffff; padding:14px 16px; border-radius:15px; margin-bottom:12px}
+[data-testid="stSidebar"] [data-testid="stImage"] img {width:100%; height:auto; object-fit:contain}
 [data-testid="stSidebar"] [data-testid="stRadio"] label {padding:7px 0}
 .block-container {padding-top:1.5rem;max-width:1650px}
 h1,h2,h3 {color:#10462d !important;letter-spacing:-.025em}
@@ -149,8 +152,12 @@ def calendario_html(ano, mes, datas_reservadas):
 
 
 with st.sidebar:
-    st.markdown('## 📖 SEMED')
-    st.caption('SECRETARIA MUNICIPAL DE EDUCAÇÃO')
+    logo_path = Path(__file__).resolve().parent / 'logo_semed.png'
+    if logo_path.exists():
+        st.image(str(logo_path), use_container_width=True)
+    else:
+        st.markdown('## SEMED')
+        st.caption('SECRETARIA MUNICIPAL DE EDUCAÇÃO')
     st.divider()
     pagina = st.radio('Navegação', ['🏠 Início', '➕ Novo Agendamento', '📅 Calendário', '📋 Todas as Reservas', '📊 Relatórios'], label_visibility='collapsed')
     st.divider()
